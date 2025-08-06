@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:dalel/core/utils/app_strings.dart';
-import 'package:dalel/core/widgets/custom_btn.dart';
+import 'package:dalel/features/onboarding/presentation/widgets/get_button.dart';
 import 'package:dalel/features/onboarding/presentation/widgets/custom_navbar.dart';
 import 'package:dalel/features/onboarding/presentation/widgets/onboarding_widget_body.dart';
 
-class OnboardingView extends StatelessWidget {
+class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
 
+  @override
+  State<OnboardingView> createState() => _OnboardingViewState();
+}
+
+class _OnboardingViewState extends State<OnboardingView> {
+  final PageController _controller = PageController(initialPage: 0);
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: [
               SizedBox(height: 40),
               CustomNavBar(),
-              OnboardingWidgetBody(),
-              CustomBtn(text: AppStrings.next),
+              OnboardingWidgetBody(
+                onPageChanged: (index) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                controller: _controller,
+              ),
+              const SizedBox(height: 88),
+
+              GetButtons(currentIndex: currentIndex, controller: _controller),
+
               const SizedBox(height: 17),
             ],
           ),

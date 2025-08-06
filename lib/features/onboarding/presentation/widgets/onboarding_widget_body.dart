@@ -1,40 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:dalel/core/utils/app_assets.dart';
 import 'package:dalel/core/utils/app_text_styles.dart';
+import 'package:dalel/features/onboarding/data/models/onboarding_model.dart';
 import 'package:dalel/features/onboarding/presentation/widgets/custom_smooth_indicator.dart';
 
 class OnboardingWidgetBody extends StatelessWidget {
-  OnboardingWidgetBody({super.key});
-  final PageController _controller = PageController();
+  const OnboardingWidgetBody({
+    super.key,
+    required this.controller,
+    this.onPageChanged,
+  });
+  final PageController controller;
+  final Function(int)? onPageChanged;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: PageView.builder(
-        controller: _controller,
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Image.asset(Assets.assetsImagesOnBoarding),
-              const SizedBox(height: 24),
-              CustomSmoothPageIndicator(controller: _controller),
-              const SizedBox(height: 32),
-              Text(
-                "Explore The history with Dalel in a smart way",
-                style: CustomTextStyles.poppins500style24.copyWith(
-                  fontWeight: FontWeight.bold,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * .65,
+        child: PageView.builder(
+          onPageChanged: onPageChanged,
+          physics: const BouncingScrollPhysics(),
+          controller: controller,
+          itemCount: onBoardingData.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Container(
+                  height: 290,
+                  width: 343,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(onBoardingData[index].path),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Explore The history with Dalel in a smart way",
-                style: CustomTextStyles.poppins300style16,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          );
-        },
+                const SizedBox(height: 24),
+                CustomSmoothPageIndicator(controller: controller),
+                const SizedBox(height: 32),
+                Text(
+                  onBoardingData[index].title,
+                  style: CustomTextStyles.poppins500style24.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  onBoardingData[index].subTitle,
+                  style: CustomTextStyles.poppins300style16,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
