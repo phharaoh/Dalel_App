@@ -5,7 +5,7 @@ abstract class AppStrings {
   //!On Boarding Strings
   skip = "Skip", next = "Next", createAccount = "Create Account", loginNow = "Login Now",
   //!Auth Strings
-  welcome = "Welcome!", welcomeBack = "Welcome Back!", fristName = "First Name", lastName = "Last Name", emailAddress = "Email Address", password = "Password", iHaveAgreeToOur = "I have agree to our ", termsAndCondition = "Terms and Condition", signUp = "Sign Up", signIn = "Sign In", alreadyHaveAnAccount = "Already have an account ? ", dontHaveAnAccount = "Don’t have an account ? ", forgotPassword = "Forgot Password ?",
+  welcome = "Welcome!", welcomeBack = "Welcome Back!", fristName = "First Name", lastName = "Last Name", emailAddress = "Email Address", password = "Password", iHaveAgreeToOur = "I have agree to our ", termsAndCondition = "Terms and Condition", signUp = "Sign Up", signIn = " Sign In", alreadyHaveAnAccount = "Already have an account ? ", dontHaveAnAccount = "Don’t have an account ? ", forgotPassword = "Forgot Password ?",
   //!Home Strings
   recommendations = "Recommendations", about = "About", wars = "Wars",
   //!Search Strings
