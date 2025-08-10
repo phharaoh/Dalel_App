@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dalel/core/utils/app_strings.dart';
-import 'package:dalel/core/widgets/custom_btn.dart';
 import 'package:dalel/features/auth/presentation/widgets/welcome_txt.dart';
-import 'package:dalel/features/auth/presentation/widgets/terms_widget.dart';
 import 'package:dalel/features/auth/presentation/widgets/have_an_account.dart';
-import 'package:dalel/features/auth/presentation/widgets/custom_text_feild.dart';
+import 'package:dalel/features/auth/presentation/widgets/custom_form_feild.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -17,27 +15,13 @@ class SignUpView extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: SizedBox(height: 152)),
+            //! welome txt
             SliverToBoxAdapter(
               child: WelcomeTextWidget(text: AppStrings.welcome),
             ),
             SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverToBoxAdapter(
-              child: CustomTextField(labelText: AppStrings.fristName),
-            ),
-            SliverToBoxAdapter(
-              child: CustomTextField(labelText: AppStrings.lastName),
-            ),
-            SliverToBoxAdapter(
-              child: CustomTextField(labelText: AppStrings.emailAddress),
-            ),
-            SliverToBoxAdapter(
-              child: CustomTextField(labelText: AppStrings.password),
-            ),
-            SliverToBoxAdapter(child: TermsAndConditionWidget()),
-            SliverToBoxAdapter(child: SizedBox(height: 88)),
-            SliverToBoxAdapter(
-              child: CustomBtn(onPressed: () {}, text: AppStrings.signUp),
-            ),
+            //! Form & Button & checkBox
+            SliverToBoxAdapter(child: CustomFormFeild()),
             SliverToBoxAdapter(child: SizedBox(height: 16)),
             SliverToBoxAdapter(
               child: HaveAnAccountWidget(
