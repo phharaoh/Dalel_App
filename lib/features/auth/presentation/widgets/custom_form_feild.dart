@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dalel/core/utils/app_colors.dart';
 import 'package:dalel/core/utils/app_strings.dart';
 import 'package:dalel/core/widgets/custom_btn.dart';
 import 'package:dalel/features/auth/presentation/widgets/custom_form.dart';
@@ -12,44 +13,53 @@ class CustomFormFeild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Form(
+          key: authCubit.signUpformKey,
           child: Column(
             children: [
               CustomForm(
                 labelText: AppStrings.fristName,
                 onChange: (firstName) {
-                  BlocProvider.of<AuthCubit>(context).firstName = firstName;
+                  authCubit.firstName = firstName;
                 },
               ),
               CustomForm(
                 labelText: AppStrings.lastName,
                 onChange: (lastName) {
-                  BlocProvider.of<AuthCubit>(context).lastName = lastName;
+                  authCubit.lastName = lastName;
                 },
               ),
               CustomForm(
                 labelText: AppStrings.emailAddress,
                 onChange: (emailAddress) {
-                  BlocProvider.of<AuthCubit>(context).emailAddress =
-                      emailAddress;
+                  authCubit.emailAddress = emailAddress;
                 },
               ),
               CustomForm(
                 labelText: AppStrings.password,
                 onChange: (password) {
-                  BlocProvider.of<AuthCubit>(context).password = password;
+                  authCubit.password = password;
                 },
               ),
+
               TermsAndConditionWidget(),
               SizedBox(height: 88),
               CustomBtn(
+                color: authCubit.termsAndConditionCheckBoxValue == false
+                    ? AppColors.grey
+                    : null,
                 onPressed: () {
-                  BlocProvider.of<AuthCubit>(
-                    context,
-                  ).createUserWithEmailAndPassword();
+                  if (authCubit.termsAndConditionCheckBoxValue == true) {
+                    if (authCubit.signUpformKey.currentState!.validate()) {
+                      authCubit.signUpUserWithEmailAndPassword();
+                    } else {
+                      null;
+                    }
+                  }
                 },
                 text: AppStrings.signUp,
               ),

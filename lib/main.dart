@@ -10,7 +10,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupServiceLocator();
-
   checkLoginUser();
   await getIt<CacheHelper>().init();
   runApp(const Dalel());

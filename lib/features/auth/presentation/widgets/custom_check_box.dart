@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalel/core/utils/app_colors.dart';
+import 'package:dalel/features/auth/presentation/manager/cubit/auth_cubit.dart';
 
-class CustomChechBox extends StatefulWidget {
-  const CustomChechBox({super.key});
+class CustomCheckBox extends StatefulWidget {
+  const CustomCheckBox({super.key});
 
   @override
-  State<CustomChechBox> createState() => _CustomChechBoxState();
+  State<CustomCheckBox> createState() => _CustomCheckBoxState();
 }
 
-class _CustomChechBoxState extends State<CustomChechBox> {
+class _CustomCheckBoxState extends State<CustomCheckBox> {
   bool? value = false;
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-        value: value,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        side: BorderSide(
-          color: AppColors.grey,
-        ),
-        onChanged: (newValue) {
-          setState(() {
-            value = newValue;
-          });
+      value: value,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      side: BorderSide(color: AppColors.grey),
+      onChanged: (newValue) {
+        setState(() {
+          value = newValue;
+          BlocProvider.of<AuthCubit>(
+            context,
+          ).updateTermsAndConditionCheckBox(newValue: newValue);
         });
+      },
+    );
   }
 }

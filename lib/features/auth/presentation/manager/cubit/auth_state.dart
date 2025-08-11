@@ -6,6 +6,8 @@ class SignUpSuccess extends AuthState {}
 
 class SignUpLoading extends AuthState {}
 
+class TermsAndConditionUpdateState extends AuthState {}
+
 class SignUpError extends AuthState {
   final String message;
 

@@ -8,19 +8,31 @@ class CustomForm extends StatelessWidget {
     required this.labelText,
     this.onChange,
     this.onFieldSubmitted,
+    this.suffix,
   });
   final String labelText;
   final void Function(String)? onChange;
   final void Function(String)? onFieldSubmitted;
+  final Widget? suffix;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 24),
       child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'this field is required';
+          } else {
+            return null;
+          }
+        },
+
         onChanged: onChange,
         onFieldSubmitted: onFieldSubmitted,
 
         decoration: InputDecoration(
+          suffixIcon: suffix,
           labelText: labelText,
           labelStyle: CustomTextStyles.pacifico500style18,
           border: getBorderStyle(),

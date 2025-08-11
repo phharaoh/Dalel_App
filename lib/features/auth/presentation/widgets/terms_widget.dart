@@ -10,7 +10,7 @@ class TermsAndConditionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CustomChechBox(),
+        const CustomCheckBox(),
         Text.rich(
           TextSpan(
             children: [
