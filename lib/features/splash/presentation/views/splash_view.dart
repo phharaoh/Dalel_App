@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dalel/core/utils/app_strings.dart';
 import 'package:dalel/core/cache/cache_helper.dart';
 import 'package:dalel/core/utils/app_text_styles.dart';
@@ -17,7 +18,11 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     var isVisited = getIt<CacheHelper>().getData(key: 'isVisited') ?? false;
     if (isVisited == true) {
-      delayedNavigator(context, '/signUp');
+      FirebaseAuth.instance.currentUser == null
+          ? delayedNavigator(context, '/signIn')
+          : FirebaseAuth.instance.currentUser!.emailVerified
+          ? delayedNavigator(context, '/home')
+          : delayedNavigator(context, '/signIn');
     } else {
       delayedNavigator(context, '/onBoarding');
     }
@@ -36,4 +41,3 @@ class _SplashViewState extends State<SplashView> {
     );
   }
 }
-

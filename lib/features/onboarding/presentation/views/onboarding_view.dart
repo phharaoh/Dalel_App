@@ -22,8 +22,8 @@ class _OnboardingViewState extends State<OnboardingView> {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             children: [
-              SizedBox(height: 40),
-              CustomNavBar(),
+              const SizedBox(height: 40),
+              const CustomNavBar(),
               OnboardingWidgetBody(
                 onPageChanged: (index) {
                   setState(() {

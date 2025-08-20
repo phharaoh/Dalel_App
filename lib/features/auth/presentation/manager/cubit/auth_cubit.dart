@@ -10,13 +10,15 @@ class AuthCubit extends Cubit<AuthState> {
   late String? emailAddress;
   late String? password;
   GlobalKey<FormState> signUpformKey = GlobalKey<FormState>();
+  GlobalKey<FormState> signinFormKey = GlobalKey();
+  GlobalKey<FormState> forgotPasswordFormKey = GlobalKey();
+
   bool? termsAndConditionCheckBoxValue = false;
 
   updateTermsAndConditionCheckBox({required newValue}) {
     termsAndConditionCheckBoxValue = newValue;
     emit(TermsAndConditionUpdateState());
   }
-
 
   void signUpUserWithEmailAndPassword() async {
     try {
@@ -31,24 +33,49 @@ class AuthCubit extends Cubit<AuthState> {
         emit(SignUpError('The password provided is too weak.'));
       } else if (e.code == 'email-already-in-use') {
         emit(SignUpError('The account already exists for that email.'));
+      } else {
+        emit(SignUpError('The account already exists for that email.'));
       }
     } catch (e) {
       emit(SignUpError(e.toString()));
     }
   }
 
-  // void signInWithEmailAndPassword() async {
-  //   try {
-  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: emailAddress,
-  //       password: password,
-  //     );
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
-  //       print('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       print('Wrong password provided for that user.');
-  //     }
-  //   }
-  // }
+  sigInWithEmailAndPassword() async {
+    try {
+      emit(SignInLoading());
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailAddress!,
+        password: password!,
+      );
+      sendEmailVerify();
+      emit(SignInSuccess());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        emit(SignInError('No user found for that email.'));
+      } else if (e.code == 'wrong-password') {
+        emit(SignInError('Wrong password provided for that user.'));
+      } else if (e.code == 'invalid-email') {
+        emit(SignInError('The email is invalid.'));
+      } else {
+        emit(SignInError(e.code));
+      }
+    } catch (e) {
+      emit(SignInError(e.toString()));
+    }
+  }
+
+  sendEmailVerify() async {
+    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+  }
+
+  resetPasswordWithLink() async {
+    try {
+      emit(ResetPasswordLoadingState());
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailAddress!);
+      emit(ResetPasswordSuccessState());
+    } catch (e) {
+      emit(ResetPasswordFailureState(errMessage: e.toString()));
+    }
+  }
 }

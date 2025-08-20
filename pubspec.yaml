@@ -20,6 +20,8 @@ dependencies:
   firebase_core:
   firebase_auth: ^6.0.0
   flutter_bloc: ^9.1.1
+  fluttertoast: ^8.2.12
+  flutter_svg: ^2.2.0
 
 dev_dependencies:
   flutter_test:

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:dalel/core/utils/app_colors.dart';
 import 'package:dalel/core/utils/app_text_styles.dart';
 
-class CustomForm extends StatelessWidget {
-  const CustomForm({
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
     super.key,
     required this.labelText,
-    this.onChange,
+    this.onChanged,
     this.onFieldSubmitted,
     this.suffix,
   });
   final String labelText;
-  final void Function(String)? onChange;
+  final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
   final Widget? suffix;
 
@@ -28,7 +28,7 @@ class CustomForm extends StatelessWidget {
           }
         },
 
-        onChanged: onChange,
+        onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
 
         decoration: InputDecoration(
