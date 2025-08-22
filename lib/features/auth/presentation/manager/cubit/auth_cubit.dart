@@ -20,13 +20,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(TermsAndConditionUpdateState());
   }
 
-  void signUpUserWithEmailAndPassword() async {
+  Future<void> signUpUserWithEmailAndPassword() async {
     try {
       emit(SignUpLoading());
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress!,
         password: password!,
       );
+      // await addUserProfile();
+      await sendEmailVerify();
+
       emit(SignUpSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -41,7 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  sigInWithEmailAndPassword() async {
+  Future<void> sigInWithEmailAndPassword() async {
     try {
       emit(SignInLoading());
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -65,11 +68,11 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  sendEmailVerify() async {
+  Future<void> sendEmailVerify() async {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
   }
 
-  resetPasswordWithLink() async {
+  Future<void> resetPasswordWithLink() async {
     try {
       emit(ResetPasswordLoadingState());
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailAddress!);
@@ -78,4 +81,13 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ResetPasswordFailureState(errMessage: e.toString()));
     }
   }
+
+  // Future<void> addUserProfile() async {
+  //   CollectionReference users = FirebaseFirestore.instance.collection("users");
+  //   await users.add({
+  //     "email": emailAddress,
+  //     "frist_name": firstName,
+  //     "last_name": lastName,
+  //   });
+  // }
 }

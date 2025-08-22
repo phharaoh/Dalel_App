@@ -53,9 +53,9 @@ class CustomSignInForm extends StatelessWidget {
               state is SignInLoading
                   ? CircularProgressIndicator(color: AppColors.primaryColor)
                   : CustomBtn(
-                      onPressed: () {
+                      onPressed: () async {
                         if (authCubit.signinFormKey.currentState!.validate()) {
-                          authCubit.sigInWithEmailAndPassword();
+                          await authCubit.sigInWithEmailAndPassword();
                         }
                       },
                       text: AppStrings.signIn,
