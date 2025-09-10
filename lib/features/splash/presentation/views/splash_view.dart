@@ -16,7 +16,7 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
-    var isVisited = getIt<CacheHelper>().getData(key: 'isVisited') ?? false;
+    bool isVisited = getIt<CacheHelper>().getData(key: 'isVisited') ?? false;
     if (isVisited == true) {
       FirebaseAuth.instance.currentUser == null
           ? delayedNavigator(context, '/signIn')
